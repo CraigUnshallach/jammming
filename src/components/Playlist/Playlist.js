@@ -1,27 +1,36 @@
-import React from 'react';
-import Tracklist from '../Tracklist/Tracklist';
+import React, { useState, useCallback } from "react";
 
-function Playlist({playlistName, playlistTracks, onNameChange, onRemove}){
+import "./Playlist.css";
 
-    const mockPlaylistString = 'Track1\nTrack 2\nTrack 3'
+import TrackList from "../Tracklist/Tracklist";
 
-    const handleNamechange = (e) => {
-        onNameChange(e.target.value);
+const Playlist = ({ onNameChange, saveStatus, ...restProps }) => {
+  const [saved, setSaved] = useState(false);
 
-    }
+  const handleNameChange = useCallback(
+    ({ target: { value } }) => {
+      onNameChange(value);
+    },
+    [onNameChange]
+  );
 
-    return(
-        <div className="Playlist">
-            <input value={playlistName} onChange={handleNamechange} />
-            <h2>{playlistName}</h2>
-            <Tracklist tracks={playlistTracks} onRemove={onRemove} isRemoval={true} />
-            <button>SAVE TO SPOTIFY</button>
-            <div>
-                <strong>Mock Playlist String:</strong>
-                <pre>{mockPlaylistString}</pre>
-            </div>
-        </div>
-    );
-}
+  return (
+    <div className="Playlist">
+      <input onChange={handleNameChange} defaultValue={"New Playlist"} />
+      <TrackList
+        tracks={restProps.playlistTracks}
+        isRemoval={true}
+        onRemove={restProps.onRemove}
+      />
+      <button className="Submit" onClick={async () => {
+        await restProps.onSave();
+        setSaved(true);
+      }}>
+        SAVE TO SPOTIFY
+      </button>
+      {saved && <p className="SaveStatus">{saveStatus}</p>}
+    </div>
+  );
+};
 
 export default Playlist;

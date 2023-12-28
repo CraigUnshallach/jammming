@@ -1,15 +1,16 @@
-import React from 'react';
-import Tracklist from '../Tracklist/Tracklist';
+import React from "react";
 
-function SearchResults({ searchResults }){
+import "./SearchResults.css";
 
-    return(
-        <div className="SearchResults">
-            <h2>Results</h2>
-            <Tracklist tracks={searchResults} />
+import TrackList from "../Tracklist/Tracklist";
 
-        </div>
-    );
-}
+const SearchResults = (props) => {
+    return (
+    <div className="SearchResults">
+      <h2>Results</h2>
+      <TrackList tracks={props.searchResults} onAdd={props.onAdd} />
+    </div>
+  );
+};
 
 export default SearchResults;
