@@ -1,5 +1,5 @@
 const clientId = 'ca0f2dabbf78424ab82b7a47290fce62';
-const redirectUri = "http://localhost:3000/";
+const redirectUri = "https://grooveglider.surge.sh/";
 
 let accessToken = '';
 
@@ -43,7 +43,9 @@ const Spotify = {
         name: track.name,
         artist: track.artists[0].name,
         album: track.album.name,
-        uri: track.uri
+        uri: track.uri,
+        preview_url: track.preview_url,
+        images_url: track.album.images[0].url
       }))
     })
   },
